@@ -21,23 +21,11 @@ steps:
 - script: dotnet build -c Release
   displayName: 'Build'
 
-- task: VSTest@2
-  displayName: 'Tests'
+- task: DotNetCoreCLI@2
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: '*/bin/*/*/*.Tests.dll'
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    runInParallel: true
-    runTestsInIsolation: true
-
-- script: dotnet test $(System.DefaultWorkingDirectory)/$(projectName).Tests/$(projectName).Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
-  displayName: 'Code coverage'
-
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish coverage results'
-  inputs:
-    codeCoverageTool: 'cobertura'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/$(projectName).Tests/coverage.cobertura.xml'
+    command: 'test'
+    projects: '$(System.DefaultWorkingDirectory)/$(projectName).Tests/$(projectName).Tests.csproj'
+    arguments: '--collect "XPlat Code Coverage"'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack for $(projectName)'
