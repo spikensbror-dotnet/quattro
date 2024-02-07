@@ -29,6 +29,11 @@ steps:
     projects: '$(System.DefaultWorkingDirectory)/$(projectName).Tests/$(projectName).Tests.csproj'
     arguments: '--collect "XPlat Code Coverage"'
 
+- task: PublishCodeCoverageResults@2
+  inputs:
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/$(projectName).Tests/TestResults/*/coverage.cobertura.xml'
+    failIfCoverageEmpty: true
+
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack for $(projectName)'
   inputs:
