@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="BusinessProcesses\IBusinessProcess.cs~RF2dac758.TMP" />
+    <None Remove="BusinessProcesses\IBusinessProcess.cs~RFe12c0a0.TMP" />
+    <None Remove="Commands\ICommand.cs~RF2f1add5.TMP" />
+  </ItemGroup>
+
+</Project>

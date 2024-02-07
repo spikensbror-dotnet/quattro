@@ -1,0 +1,57 @@
+pool: Hosted Windows 2019 with VS2019
+name: 0.0.1+$(Rev:r)
+variables:
+  projectName: 'Quattro'
+
+trigger:
+  branches:
+    exclude:
+    - master
+
+steps:
+
+- checkout: self
+
+- task: NuGetToolInstaller@1
+  displayName: 'Ensure latest version of NuGet'
+  inputs:
+    versionSpec: 
+    checkLatest: true
+
+- script: dotnet build -c Release
+  displayName: 'Build'
+
+- task: VSTest@2
+  displayName: 'Tests'
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: '*/bin/*/*/*.Tests.dll'
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    runInParallel: true
+    runTestsInIsolation: true
+
+- script: dotnet test $(System.DefaultWorkingDirectory)/$(projectName).Tests/$(projectName).Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+  displayName: 'Code coverage'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish coverage results'
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/$(projectName).Tests/coverage.cobertura.xml'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack for $(projectName)'
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(projectName)/*.csproj'
+    configuration: 'Release'
+    packDirectory: '$(Build.ArtifactStagingDirectory)/packages'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'BUILD_BUILDNUMBER'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish packages artifact'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/packages'
+    ArtifactName: 'packages'
+    publishLocation: 'Container'
