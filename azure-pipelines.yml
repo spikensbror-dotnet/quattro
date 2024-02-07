@@ -1,4 +1,5 @@
-pool: windows-latest
+pool:
+  vmImage: ubuntu-latest
 name: 0.0.1+$(Rev:r)
 variables:
   projectName: 'Quattro'
