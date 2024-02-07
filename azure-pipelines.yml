@@ -29,8 +29,9 @@ steps:
     projects: '$(System.DefaultWorkingDirectory)/$(projectName).Tests/$(projectName).Tests.csproj'
     arguments: '--collect "XPlat Code Coverage"'
 
-- task: PublishCodeCoverageResults@2
+- task: PublishCodeCoverageResults@1
   inputs:
+    codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
     failIfCoverageEmpty: true
 
