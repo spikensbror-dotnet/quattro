@@ -1,4 +1,4 @@
-pool: Hosted Windows 2019 with VS2019
+pool: windows-latest
 name: 0.0.1+$(Rev:r)
 variables:
   projectName: 'Quattro'
@@ -22,6 +22,7 @@ steps:
   displayName: 'Build'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Tests'
   inputs:
     command: 'test'
     projects: '$(System.DefaultWorkingDirectory)/$(projectName).Tests/$(projectName).Tests.csproj'
