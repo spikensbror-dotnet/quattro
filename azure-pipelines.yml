@@ -31,7 +31,7 @@ steps:
 
 - task: PublishCodeCoverageResults@2
   inputs:
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/$(projectName).Tests/TestResults/*/coverage.cobertura.xml'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
     failIfCoverageEmpty: true
 
 - task: DotNetCoreCLI@2
