@@ -1,5 +1,6 @@
-pool: Hosted Windows 2019 with VS2019
-name: 0.0.1+$(Rev:r)
+pool:
+  vmImage: ubuntu-latest
+name: 0.0.1-alpha.$(Rev:r)
 variables:
   projectName: 'Quattro'
 
@@ -21,29 +22,34 @@ steps:
 - script: dotnet build -c Release
   displayName: 'Build'
 
-- task: VSTest@2
+- task: DotNetCoreCLI@2
   displayName: 'Tests'
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: '*/bin/*/*/*.Tests.dll'
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    runInParallel: true
-    runTestsInIsolation: true
-
-- script: dotnet test $(System.DefaultWorkingDirectory)/$(projectName).Tests/$(projectName).Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
-  displayName: 'Code coverage'
+    command: 'test'
+    projects: '$(System.DefaultWorkingDirectory)/$(projectName).Tests/$(projectName).Tests.csproj'
+    arguments: '--collect "XPlat Code Coverage"'
 
 - task: PublishCodeCoverageResults@1
-  displayName: 'Publish coverage results'
   inputs:
-    codeCoverageTool: 'cobertura'
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/$(projectName).Tests/coverage.cobertura.xml'
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
+    failIfCoverageEmpty: true
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack for $(projectName)'
   inputs:
     command: 'pack'
     packagesToPack: '$(projectName)/*.csproj'
+    configuration: 'Release'
+    packDirectory: '$(Build.ArtifactStagingDirectory)/packages'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'BUILD_BUILDNUMBER'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack for $(projectName).Extensions.DependencyInjection'
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(projectName).Extensions.DependencyInjection/*.csproj'
     configuration: 'Release'
     packDirectory: '$(Build.ArtifactStagingDirectory)/packages'
     versioningScheme: 'byEnvVar'
