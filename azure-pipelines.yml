@@ -1,6 +1,6 @@
 pool:
   vmImage: ubuntu-latest
-name: 0.0.1+$(Rev:r)
+name: 0.0.1-alpha.$(Rev:r)
 variables:
   projectName: 'Quattro'
 
