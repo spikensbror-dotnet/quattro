@@ -10,6 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="coverage\**" />
+    <Compile Remove="TestResults\**" />
+    <Compile Remove="tools\**" />
+    <EmbeddedResource Remove="coverage\**" />
+    <EmbeddedResource Remove="TestResults\**" />
+    <EmbeddedResource Remove="tools\**" />
+    <None Remove="coverage\**" />
+    <None Remove="TestResults\**" />
+    <None Remove="tools\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="BusinessProcesses\Examples\OrderExample\Commands\CreateOrder.cs~RFe5cad7e.TMP" />
     <None Remove="BusinessProcesses\Examples\OrderExample\Commands\SetRandomPriceOnOrderRowHandler.cs~RF5d1dc934.TMP" />
   </ItemGroup>

@@ -9,7 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quattro", "Quattro\Quattro.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quattro.Extensions.DependencyInjection", "Quattro.Extensions.DependencyInjection\Quattro.Extensions.DependencyInjection.csproj", "{9926BB8B-1B3E-45DB-AECB-6BF4EC632E46}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{52D8F50F-7DD2-4A24-A51A-7FC0375C73CD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5C9E756B-B129-4C58-BFA4-A0B79F303C99}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
