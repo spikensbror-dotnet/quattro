@@ -45,6 +45,16 @@ steps:
     versioningScheme: 'byEnvVar'
     versionEnvVar: 'BUILD_BUILDNUMBER'
 
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack for $(projectName).Extensions.DependencyInjection'
+  inputs:
+    command: 'pack'
+    packagesToPack: '$(projectName).Extensions.DependencyInjection/*.csproj'
+    configuration: 'Release'
+    packDirectory: '$(Build.ArtifactStagingDirectory)/packages'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'BUILD_BUILDNUMBER'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish packages artifact'
   inputs:
