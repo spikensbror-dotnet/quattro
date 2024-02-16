@@ -2,29 +2,26 @@
 {
     public class CommandInvoker(IEnumerable<ICommandHandler> handlers)
     {
-        private readonly Dictionary<(Type, Type), ICommandHandler> _handlers =
-            handlers.ToDictionary(h => (h.ContextType, h.InputType));
+        private readonly Dictionary<Type, ICommandHandler> _handlers = handlers.ToDictionary(
+            h => h.InputType
+        );
 
-        public async Task<TOutput> InvokeAsync<TContext, TOutput>(
-            TContext context,
-            ICommand<TOutput> command
-        )
-            where TContext : notnull
+        public async Task<TOutput> InvokeAsync<TOutput>(ICommand<TOutput> command)
             where TOutput : notnull
         {
-            return (TOutput)await InvokeAsync(context, (object)command);
+            return (TOutput)await InvokeAsync((object)command);
         }
 
-        public async Task<object> InvokeAsync(object context, object command)
+        public async Task<object> InvokeAsync(object command)
         {
-            if (!_handlers.TryGetValue((context.GetType(), command.GetType()), out var handler))
+            if (!_handlers.TryGetValue(command.GetType(), out var handler))
             {
                 throw new InvalidOperationException(
-                    $"No handler available for command '{command.GetType().FullName}' with context type '{context.GetType().FullName}'"
+                    $"No handler available for command '{command.GetType().FullName}'"
                 );
             }
 
-            return await handler.InvokeAsync(context, command);
+            return await handler.InvokeAsync(command);
         }
     }
 }

@@ -4,10 +4,9 @@ using Quattro.Tests.BusinessProcesses.Examples.OrderExample.Persistence;
 namespace Quattro.Tests.BusinessProcesses.Examples.OrderExample.Commands
 {
     class SetRandomPriceOnOrderRowHandler(InMemoryOrderRepository orderRepository)
-        : CommandHandler<TestContext, SetRandomPriceOnOrderRow, SetRandomPriceOnOrderRow.Result>
+        : CommandHandler<SetRandomPriceOnOrderRow, SetRandomPriceOnOrderRow.Result>
     {
         public override async Task<SetRandomPriceOnOrderRow.Result> InvokeAsync(
-            TestContext context,
             SetRandomPriceOnOrderRow input
         )
         {

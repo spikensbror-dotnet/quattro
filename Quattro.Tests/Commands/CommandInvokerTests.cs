@@ -10,10 +10,8 @@ namespace Quattro.Tests.Commands
         {
             var invoker = new CommandInvoker([]);
 
-            await invoker.InvokeAsync(new ContextFixture(), new CommandFixture());
+            await invoker.InvokeAsync(new CommandFixture());
         }
-
-        record ContextFixture();
 
         record CommandFixture() : ICommand<CommandFixture.Result>
         {

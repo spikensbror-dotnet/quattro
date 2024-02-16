@@ -9,11 +9,9 @@ namespace Quattro.Tests.BusinessProcesses.Examples.OrderExample
         [TestMethod]
         public async Task ShouldCreateOrderWithSpecifiedRows()
         {
-            var context = new TestContext();
             var output = await QuattroHarness
                 .Resolve<BasicOrderCreationProcess>()
                 .InvokeAsync(
-                    context,
                     new BasicOrderCreationProcess.Input(
                         new CreateOrder(CustomerNumber: "202", Currency: "SEK"),
                         [

@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
             params Assembly[] assemblies
         )
         {
-            services.AddSingleton(typeof(CommandInvoker));
+            services.AddScoped(typeof(CommandInvoker));
 
             services.AddQuattroCommandHandlers(assemblies);
             services.AddQuattroBusinessProcesses(assemblies);
@@ -29,7 +29,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             foreach (var type in commandHandlerTypes)
             {
-                services.AddSingleton(typeof(ICommandHandler), type);
+                services.AddScoped(typeof(ICommandHandler), type);
             }
         }
 
@@ -41,16 +41,16 @@ namespace Microsoft.Extensions.DependencyInjection
             var businessProcessTypes = assemblies
                 .SelectMany(a => a.DefinedTypes)
                 .Where(
-                    t => t.IsClass && !t.IsAbstract && t.GetInterface("IBusinessProcess`3") != null
+                    t => t.IsClass && !t.IsAbstract && t.GetInterface("IBusinessProcess`2") != null
                 )
                 .Select(t => t.AsType())
                 .ToArray();
 
             foreach (var type in businessProcessTypes)
             {
-                services.AddSingleton(type);
-                var interfaceType = type.GetInterface("IBusinessProcess`3")!;
-                services.AddSingleton(interfaceType, sp => sp.GetService(type)!);
+                services.AddScoped(type);
+                var interfaceType = type.GetInterface("IBusinessProcess`2")!;
+                services.AddScoped(interfaceType, sp => sp.GetService(type)!);
             }
         }
     }

@@ -4,12 +4,9 @@ using Quattro.Tests.BusinessProcesses.Examples.OrderExample.Persistence;
 namespace Quattro.Tests.BusinessProcesses.Examples.OrderExample.Commands
 {
     class CreateOrderRowHandler(InMemoryOrderRepository orderRepository)
-        : CommandHandler<TestContext, CreateOrderRow, CreateOrderRow.Result>
+        : CommandHandler<CreateOrderRow, CreateOrderRow.Result>
     {
-        public override async Task<CreateOrderRow.Result> InvokeAsync(
-            TestContext context,
-            CreateOrderRow input
-        )
+        public override async Task<CreateOrderRow.Result> InvokeAsync(CreateOrderRow input)
         {
             if (input.OrderNumber == null)
             {

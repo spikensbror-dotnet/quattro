@@ -1,7 +1,7 @@
 ﻿namespace Quattro.BusinessProcesses
 {
-    public interface IBusinessProcess<TContext, TInput, TOutput>
+    public interface IBusinessProcess<TInput, TOutput>
     {
-        Task<TOutput> InvokeAsync(TContext context, TInput input);
+        Task<TOutput> InvokeAsync(TInput input);
     }
 }

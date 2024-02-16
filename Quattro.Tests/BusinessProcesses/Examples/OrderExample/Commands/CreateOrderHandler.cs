@@ -4,12 +4,9 @@ using Quattro.Tests.BusinessProcesses.Examples.OrderExample.Persistence;
 namespace Quattro.Tests.BusinessProcesses.Examples.OrderExample.Commands
 {
     class CreateOrderHandler(InMemoryOrderRepository orderRepository)
-        : CommandHandler<TestContext, CreateOrder, CreateOrder.Result>
+        : CommandHandler<CreateOrder, CreateOrder.Result>
     {
-        public override async Task<CreateOrder.Result> InvokeAsync(
-            TestContext context,
-            CreateOrder input
-        )
+        public override async Task<CreateOrder.Result> InvokeAsync(CreateOrder input)
         {
             var orderNumber = Guid.NewGuid().ToString()[..8].ToUpperInvariant();
 

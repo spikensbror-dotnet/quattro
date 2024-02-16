@@ -5,17 +5,12 @@ using Quattro.Tests.BusinessProcesses.Examples.OrderExample.Commands;
 namespace Quattro.Tests.BusinessProcesses.Examples.OrderExample
 {
     class BasicOrderCreationProcess(CommandInvoker commands)
-        : IBusinessProcess<
-            TestContext,
-            BasicOrderCreationProcess.Input,
-            BasicOrderCreationProcess.Output
-        >
+        : IBusinessProcess<BasicOrderCreationProcess.Input, BasicOrderCreationProcess.Output>
     {
-        public async Task<Output> InvokeAsync(TestContext context, Input input)
+        public async Task<Output> InvokeAsync(Input input)
         {
-            var order = await commands.InvokeAsync(context, input.Order);
+            var order = await commands.InvokeAsync(input.Order);
             var rows = await commands.InvokeInOrderAsync(
-                context,
                 from row in input.Rows
                 select row with
                 {
@@ -24,7 +19,6 @@ namespace Quattro.Tests.BusinessProcesses.Examples.OrderExample
             );
 
             await commands.InvokeInParallelAsync(
-                context,
                 from row in rows
                 select new SetRandomPriceOnOrderRow(row.OrderNumber, row.RowPosition)
             );
